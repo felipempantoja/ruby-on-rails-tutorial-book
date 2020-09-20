@@ -1,0 +1,42 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Rails server",
+      "type": "Ruby",
+      "request": "launch",
+      "cwd": "${workspaceRoot}",
+      "program": "${workspaceRoot}/bin/rails",
+      "args": ["server"]
+    },
+    {
+      "name": "Run RSpec - all",
+      "type": "Ruby",
+      "request": "launch",
+      "cwd": "${workspaceRoot}",
+      "program": "${workspaceRoot}/bin/bundle",
+      "args": [
+        "exec",
+        "rspec",
+        "--pattern",
+        "${workspaceRoot}/spec/**/*_spec.rb"
+      ]
+    },
+    {
+      "name": "Debug RSpec - open spec file",
+      "type": "Ruby",
+      "request": "launch",
+      "cwd": "${workspaceRoot}",
+      "useBundler": true,
+      "pathToBundler": "${workspaceRoot}/bin/bundle",
+      "pathToRDebugIDE": "/home/pantoja/.asdf/installs/ruby/2.7.1/lib/ruby/gems/2.7.0/gems/ruby-debug-ide-0.7.2",
+      "debuggerPort": "1235",
+      "program": "${workspaceRoot}/bin/bundle",
+      "args": [
+        "exec",
+        "rspec",
+        "${file}"
+      ]
+    },
+  ]
+}
