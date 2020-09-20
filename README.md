@@ -1,24 +1,21 @@
-# README
+# Rails Sample App
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+> Reference: Ruby on Rails Tutorial's Book, from Hartl
 
-Things you may want to cover:
+The idea behind the book is introducing the reader to the Rails ecosystem, by
+guiding us to a series of well explained snippets so we can end up with a Twitter-Like
+Sample App to create posts and follow users. It also encourages the use of TDD
+practice and use it in all examples from beginning to the very end. The test
+library used is RScpec alongside Capybara for Acceptance Tests.
 
-* Ruby version
+## TODO
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- [x] Bootstrapping the app
+- [x] Modeling Users
+- [x] Adding Model Validations
+- [x] Sign Up
+- [x] Sign In
+- [x] Sign Out
+- [ ] CRUD Users
+- [ ] User Microposts
+- [ ] Following Users
