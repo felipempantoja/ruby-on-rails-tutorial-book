@@ -1,4 +1,11 @@
 class UsersController < ApplicationController
+  before_action :signed_in_user, only: %i[index edit update]
+  before_action :correct_user, only: %i[edit update]
+
+  def index
+    @users = User.all
+  end
+
   def new
     @user = User.new
   end
@@ -18,7 +25,7 @@ class UsersController < ApplicationController
   def update
     params.permit!
     @user = User.find(params[:id])
-    if @user.update_attributes(params[:user])
+    if @user&.update_attributes(params[:user])
       sign_in @user
       flash[:success] = 'Profile updated'
       redirect_to @user
@@ -39,5 +46,15 @@ class UsersController < ApplicationController
 
   def by_id
     @user = User.find(params[:id])
+  end
+
+  def signed_in_user
+    store_location
+    redirect_to signin_path, notice: 'Please sign in.' unless signed_in?
+  end
+
+  def correct_user
+    @user = User.find(params[:id])
+    redirect_to root_path unless current_user?(@user)
   end
 end

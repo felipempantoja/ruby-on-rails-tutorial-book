@@ -19,8 +19,12 @@ RSpec.describe 'AuthenticationPages', type: :request do
       end
 
       it { should have_title(user.name) }
+
+      it { should have_link('Users', href: users_path) }
       it { should have_link('Profile', href: user_path(user)) }
+      it { should have_link('Settings', href: edit_user_path(user)) }
       it { should have_link('Sign out', href: signout_path) }
+
       it { should_not have_link('Sign in', href: signin_path) }
 
       describe 'followed by signout' do
@@ -39,6 +43,60 @@ RSpec.describe 'AuthenticationPages', type: :request do
         before { click_link 'Home' }
         it { should_not have_selector('div.alert.alert-error') }
       end
+    end
+  end
+
+  context 'authorization' do
+    context 'for non-signed-in users' do
+      let(:user) { FactoryBot.create(:user) }
+
+      context 'when visiting the edit page' do
+        before { visit edit_user_path(user) }
+        it { should have_title('Sign in') }
+      end
+
+      context 'when submiting to the update action' do
+        before { put user_path(user) }
+        specify { response.should redirect_to signin_path }
+      end
+
+      context 'when attempting to visit a protected page' do
+        before do
+          visit edit_user_path(user)
+          fill_in 'Email', with: user.email
+          fill_in 'Password', with: user.password
+          click_button 'Sign in'
+        end
+
+        context 'after signing in' do
+          it 'should render the desired protected page' do
+            page.should have_title('Edit user')
+          end
+        end
+      end
+
+      context 'in the Users controller' do
+        context 'visiting the user index' do
+          before { visit users_path }
+          it { should have_title('Sign in') }
+        end
+      end
+    end
+
+    context 'as wrong user' do
+      let(:user) { FactoryBot.create(:user) }
+      let(:wrong_user) { FactoryBot.create(:user, id: 10, email: 'wrong@example.com') }
+      before { sign_in user }
+
+      context 'visiting user edit page' do
+        before { visit edit_user_path(wrong_user) }
+        it { should_not have_title(full_title('Edit user')) }
+      end
+
+      # context 'submitting a PUT request to the Users#update action' do
+      #   before { put user_path(wrong_user), params: { user: wrong_user.to_json } }
+      #   specify { response.should redirect_to root_path }
+      # end
     end
   end
 end
