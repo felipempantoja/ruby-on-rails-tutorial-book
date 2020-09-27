@@ -24,7 +24,7 @@ RSpec.describe 'UserPages', type: :request do
         fill_in 'Name', with: 'Example User'
         fill_in 'Email', with: 'user@example.com'
         fill_in 'Password', with: '123456'
-        fill_in 'Confirmation', with: '123456'
+        fill_in 'Confirm Password', with: '123456'
       end
 
       it 'should create a user' do

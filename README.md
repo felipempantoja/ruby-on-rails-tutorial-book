@@ -16,6 +16,6 @@ library used is RScpec alongside Capybara for Acceptance Tests.
 - [x] Sign Up
 - [x] Sign In
 - [x] Sign Out
-- [ ] CRUD Users
+- [x] CRUD Users
 - [ ] User Microposts
 - [ ] Following Users
