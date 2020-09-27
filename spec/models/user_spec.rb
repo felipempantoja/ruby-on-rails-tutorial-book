@@ -16,6 +16,7 @@ RSpec.describe User, type: :model do
   it { should respond_to(:remember_token) }
   it { should respond_to(:admin) }
   it { should respond_to(:authenticate) }
+  it { should respond_to(:microposts) }
 
   it { should be_valid }
   it { should_not be_admin }
@@ -119,8 +120,27 @@ RSpec.describe User, type: :model do
     it { @user.remember_token.should_not be_blank }
   end
 
-  context "with admin attribute set to 'true" do
+  context 'with admin attribute set to true' do
     before { @user.toggle!(:admin) }
     it { should be_admin }
+  end
+
+  context 'micropost associations' do
+    before { @user.save }
+    let!(:older_micropost) { FactoryBot.create(:micropost, user: @user, created_at: 1.day.ago) }
+    let!(:newer_micropost) { FactoryBot.create(:micropost, user: @user, created_at: 1.hour.ago) }
+
+    it 'should have the right microposts in the right order' do
+      # newest first
+      @user.microposts.should == [newer_micropost, older_micropost]
+    end
+
+    it 'should destroy associated microposts' do
+      microposts = @user.microposts
+      @user.destroy
+      microposts.each do |micropost|
+        Micropost.find_by_id(micropost.id).should be_nil
+      end
+    end
   end
 end
