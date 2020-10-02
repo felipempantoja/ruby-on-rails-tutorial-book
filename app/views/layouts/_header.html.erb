@@ -1,23 +1,34 @@
-<header class="navbar navbar-fixed-top">
-  <div class="navbar-inner">
-    <div class="container">
-      <%= link_to "sample app", '#', id: "logo" %>
-      <nav>
-        <ul class="nav pull-right">
-          <li><%= link_to "Home", root_path %></li>
-          <li><%= link_to "Help", help_path %></li>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+  <a class="navbar-brand" href="#">Navbar</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-          <% if signed_in? %>
-            <li><%= link_to "Users", users_path %></li>
-            <li><%= link_to "Profile", user_path(current_user) %></li>
-            <li><%= link_to "Settings", edit_user_path(current_user) %></li>
-            <li class="divider"></li>
-            <li><%= link_to "Sign out", signout_path, method: "delete" %></li>
-          <% else %>
-            <li><%= link_to "Sign in", signin_path %></li>
+  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <% if signed_in? %>
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <%= link_to root_path, class: "nav-link" do %>
+            Home <span class="sr-only">(current)</span>
           <% end %>
-        </ul>
-      </nav>
-    </div>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Users", users_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Profile", user_path(current_user), class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Settings", edit_user_path(current_user), class: "nav-link" %>
+        </li>
+      </ul>
+      <form class="form-inline">
+        <%= link_to "Sign out", signout_path, method: "delete", class: "btn btn-secondary" %>
+      </form>
+    <% else %>
+      <form class="form-inline">
+        <%= link_to "Sign in", signin_path, class: "btn btn-secondary" %>
+      </form>
+    <% end %>
   </div>
-</header>
+</nav>
