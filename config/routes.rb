@@ -1,6 +1,9 @@
+# frozen_string_literal = true
+
 Rails.application.routes.draw do
   resources :users
   resources :sessions, only: %i[index new create destroy]
+  resources :microposts, only: %i[create destroy]
 
   root to: 'static_pages#home'
 

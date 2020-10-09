@@ -5,13 +5,12 @@
   </button>
 
   <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-    <% if signed_in? %>
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <%= link_to root_path, class: "nav-link" do %>
-            Home <span class="sr-only">(current)</span>
-          <% end %>
-        </li>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <%= link_to "Home", root_path, class: "nav-link" %>
+      </li>
+
+      <% if signed_in? %>
         <li class="nav-item">
           <%= link_to "Users", users_path, class: "nav-link" %>
         </li>
@@ -21,14 +20,12 @@
         <li class="nav-item">
           <%= link_to "Settings", edit_user_path(current_user), class: "nav-link" %>
         </li>
-      </ul>
-      <form class="form-inline">
-        <%= link_to "Sign out", signout_path, method: "delete", class: "btn btn-secondary" %>
-      </form>
+      <% end %>
+    </ul>
+    <% if signed_in? %>
+      <%= link_to "Sign out", signout_path, method: "delete", class: "btn btn-secondary" %>
     <% else %>
-      <form class="form-inline">
-        <%= link_to "Sign in", signin_path, class: "btn btn-secondary" %>
-      </form>
+      <%= link_to "Sign in", signin_path, class: "btn btn-secondary" %>
     <% end %>
   </div>
 </nav>

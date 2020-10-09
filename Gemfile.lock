@@ -87,6 +87,9 @@ GEM
     debase (0.2.4.1)
       debase-ruby_core_source (>= 0.10.2)
     debase-ruby_core_source (0.10.10)
+    debugger-xml (0.4.1)
+      builder (>= 2.0.0)
+      byebug
     diff-lcs (1.4.4)
     erubi (1.9.0)
     execjs (2.7.0)
@@ -293,6 +296,7 @@ DEPENDENCIES
   byebug
   capybara (>= 2.15)
   debase
+  debugger-xml
   factory_bot_rails (~> 6.1.0)
   faker (~> 2.14.0)
   guard-rspec (= 4.7.3)

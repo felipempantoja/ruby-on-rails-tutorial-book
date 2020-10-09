@@ -37,6 +37,7 @@ class UsersController < ApplicationController
 
   def show
     by_id
+    @microposts = @user.microposts.paginate(page: params[:page])
   end
 
   def edit
@@ -57,11 +58,6 @@ class UsersController < ApplicationController
 
   def by_id
     @user = User.find(params[:id])
-  end
-
-  def signed_in_user
-    store_location
-    redirect_to signin_path, notice: 'Please sign in.' unless signed_in?
   end
 
   def correct_user

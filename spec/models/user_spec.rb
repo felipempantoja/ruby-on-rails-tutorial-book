@@ -142,5 +142,14 @@ RSpec.describe User, type: :model do
         Micropost.find_by_id(micropost.id).should be_nil
       end
     end
+
+    # context 'status' do
+    #   let(:unfollowed_post) do
+    #     FactoryBot.create(:micropost, user:FactoryBot.create(:user))
+    #   end
+    #   it { expect(subject.feed).to include(newer_micropost) }
+    #   it { expect(subject.feed).to include(older_micropost) }
+    #   it { expect(subject.feed).to include(unfollowed_post) }
+    # end
   end
 end

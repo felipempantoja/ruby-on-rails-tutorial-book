@@ -48,10 +48,19 @@ RSpec.describe 'UserPages', type: :request do
 
   context 'profile page' do
     let(:user) { FactoryBot.create(:user) }
+    let!(:m1) { FactoryBot.create(:micropost, user: user, content: 'Foo') }
+    let!(:m2) { FactoryBot.create(:micropost, user: user, content: 'Bar') }
+
     before { visit user_path(user) }
 
     it { should have_selector('h1', text: user.name) }
     it { should have_title("RoR Sample | #{user.name}") }
+
+    context 'microposts' do
+      it { should have_content(m1.content) }
+      it { should have_content(m2.content) }
+      it { should have_content(user.microposts.count) }
+    end
   end
 
   context 'edit' do
@@ -110,12 +119,12 @@ RSpec.describe 'UserPages', type: :request do
       end
     end
 
-    context "delete links" do
+    context 'delete links' do
       it { should_not have_link('delete') }
 
-      context "as an admin user" do
+      context 'as an admin user' do
         let(:admin) { FactoryBot.create(:admin) }
-        
+
         before do
           sign_in admin
           visit users_path
@@ -127,8 +136,6 @@ RSpec.describe 'UserPages', type: :request do
         end
         it { should_not have_link('delete', href: user_path(admin)) }
       end
-      
     end
-    
   end
 end

@@ -18,6 +18,10 @@ class User < ApplicationRecord
 
   before_save :create_remember_token
 
+  def feed
+    Micropost.where('user_id = ?', id)
+  end
+
   private
 
   def create_remember_token

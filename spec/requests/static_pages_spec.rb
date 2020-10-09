@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'StaticPages', type: :request do
-
   let(:base_title) { 'RoR Sample' }
 
   describe 'GET /static_pages/home' do
@@ -10,6 +9,22 @@ RSpec.describe 'StaticPages', type: :request do
     context 'when a user arrives the root page and it gets rendered' do
       it { expect(page).to have_selector('h1', text: 'Welcome to the Sample App') }
       it { expect(page).to have_title(base_title) }
+    end
+
+    context 'for signed-in users' do
+      let(:user) { FactoryBot.create(:user) }
+      before do
+        FactoryBot.create(:micropost, user: user, content: 'Lorem Ipsum')
+        FactoryBot.create(:micropost, user: user, content: 'Dolor sit amet')
+        sign_in user
+        visit root_path
+      end
+
+      it "should render the user's feed" do
+        user.feed.each do |item|
+          page.should have_selector("li##{item.id}", text: item.content)
+        end
+      end
     end
   end
 
